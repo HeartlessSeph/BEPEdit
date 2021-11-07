@@ -1,0 +1,60 @@
+{
+	"Structure Type": "Custom",
+	"Property": {
+		"Damage": {
+			"DataType": "uint32",
+			"Default": 100,
+			"Enumeration": "None"
+		},
+		"Knockback Force": {
+			"DataType": "uint32",
+			"Default": 1,
+			"Enumeration": "None"
+		},
+		"Hitbox Location": {
+			"DataType": "uint32",
+			"Default": 0,
+			"Enumeration": "None"
+		},
+		"Move Effect 1": {
+			"DataType": "nibble_1",
+			"Default": 0,
+			"Enumeration": "None"
+		},
+		"Move Effect 2": {
+			"DataType": "nibble_2",
+			"Default": 0,
+			"Enumeration": "None"
+		},
+		"Move Effect 3": {
+			"DataType": "nibble_1",
+			"Default": 0,
+			"Enumeration": "None"
+		},
+		"Move Effect 4": {
+			"DataType": "nibble_2",
+			"Default": 0,
+			"Enumeration": "None"
+		},
+		"Move Effect 5": {
+			"DataType": "nibble_1",
+			"Default": 0,
+			"Enumeration": "None"
+		},
+		"Move Effect 6": {
+			"DataType": "nibble_2",
+			"Default": 0,
+			"Enumeration": "None"
+		},
+		"Move Effect 7": {
+			"DataType": "nibble_1",
+			"Default": 0,
+			"Enumeration": "None"
+		},
+		"Move Effect 8": {
+			"DataType": "nibble_2",
+			"Default": 0,
+			"Enumeration": "None"
+		}
+	}
+}

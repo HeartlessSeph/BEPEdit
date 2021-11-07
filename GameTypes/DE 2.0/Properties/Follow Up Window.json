@@ -1,0 +1,10 @@
+{
+"Structure Type": "Custom",
+	"Property": {
+		"Skill ID Number": {
+			"DataType": "uint32",
+			"Default": 0,
+			"Enumeration": "None"
+		}
+	}
+}
