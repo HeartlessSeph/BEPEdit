@@ -4,6 +4,8 @@ from cmn_functions import *
 import argparse
 from binary_reader import BinaryReader
 from GameTypes.BEP_Properties import change_bep_version
+from GameTypes.BEP_Properties import convert_bep_to_json
+from GameTypes.BEP_Properties import convert_json_to_bep
 
 
 def check_game_choice(game_dict, message):
@@ -64,6 +66,17 @@ if file_bool:  # Single File
             bep_prop_dict = jsonKeys2int(import_json(json_property_path, "Property_Types"))
             bep_prop_dict_2 = jsonKeys2int(import_json(json_property_path_2, "Property_Types"))
             change_bep_version(f, file_name, bep_prop_dict, bep_prop_dict_2, bep_game, bep_game_2)
+        else:
+            json_property_path = Path("GameTypes/" + bep_game)
+            bep_prop_dict = jsonKeys2int(import_json(json_property_path, "Property_Types"))
+            convert_bep_to_json(f, bep_dictionary, file_name, bep_game, bep_prop_dict)
+            export_json(Path.cwd(), file_name, bep_dictionary)
+    if file_extension == '.json':
+        json_property_path = Path("GameTypes/" + bep_game)
+        bep_prop_dict = jsonKeys2int(import_json(json_property_path, "Property_Types"))
+        bep_json = import_json(Path(""), file_name)
+        convert_json_to_bep(bep_json, bep_prop_dict, bep_game)
+
 
 else:
     for bep in kfile.iterdir():
@@ -81,3 +94,12 @@ else:
                 change_bep_version(f, bep_name, bep_prop_dict, bep_prop_dict_2, bep_game, bep_game_2, kfile)
             elif current_bep.is_file() and current_bep.suffix == ".json":
                 print("Can't perform version change on json file.")
+        else:
+            if current_bep.is_file() and current_bep.suffix == ".bep":
+                json_property_path = Path("GameTypes/" + bep_game)
+                bep_prop_dict = jsonKeys2int(import_json(json_property_path, "Property_Types"))
+                convert_bep_to_json(f, bep_dictionary, bep_name, bep_game, bep_prop_dict)
+    if args.verchange:
+        pass
+    else:
+        export_json(Path.cwd(), file_name, bep_dictionary)

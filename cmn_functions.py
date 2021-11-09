@@ -19,6 +19,19 @@ def swap_dict_keys_values(cur_dict):
     return dict([(value, key) for key, value in cur_dict.items()])
 
 
+def get_dict_key_index(cur_dict, key):
+    return list(cur_dict.keys()).index(key)
+
+
+def remove_keys_from_dict(cur_dict, num_keys):
+    if isinstance(cur_dict, dict):
+        newdict = {}
+        for k, v in cur_dict.items():
+            if get_dict_key_index(cur_dict, k) > num_keys: newdict[k] = v
+        return newdict
+    return x
+
+
 def tree():  # Weird self expanding dictionary. Will have to study how it actually works at some point.
     def the_tree():
         return defaultdict(the_tree)
