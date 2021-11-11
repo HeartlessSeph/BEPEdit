@@ -5,39 +5,6 @@ sys.path.append("..")
 from cmn_functions import *
 
 
-def convert_hex_to_hexstring(hex_value):
-    byte_array = bytearray(hex_value)
-    hexadecimal_string = str(byte_array.hex(' '))
-    return hexadecimal_string
-
-
-def convert_hexstring_to_hex(hex_string):
-    return bytes.fromhex(hex_string)
-
-
-def convert_byte_to_nibble(hex_value, nibble_part):
-    byte_array = hex_value
-    nibble_1 = (byte_array >> 4) & 0xf
-    nibble_2 = byte_array & 0xf
-    if nibble_part == 1:
-        return nibble_1
-    else:
-        return nibble_2
-
-
-def convert_nibbles_to_byte(nibble_1, nibble_2):
-    return (nibble_1 << 4) | nibble_2
-
-
-def get_nth_key(dictionary, n=0):  # Not my function, taken from online
-    if n < 0:
-        n += len(dictionary)
-    for i, key in enumerate(dictionary.keys()):
-        if i == n:
-            return key
-    raise IndexError("dictionary index out of range")
-
-
 def change_property_ver_from_json(bepfile, new_file, base_game_dict, conv_game_dict, base_game, conv_game, property_type, property_section, header):
     if property_type in base_game_dict:
         if base_game_dict[property_type] in swap_dict_keys_values(conv_game_dict):
