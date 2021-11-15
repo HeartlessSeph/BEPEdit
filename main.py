@@ -39,8 +39,9 @@ if len(sys.argv) <= 1:
 parser = argparse.ArgumentParser(description=".BEP extraction tool")
 parser.add_argument("file", help=".bep file or folder containing bep files")
 parser_group = parser.add_mutually_exclusive_group()
-parser_group.add_argument("verchange", help="Converts bep from one game to another.", action="store_true")
-OE_arg = parser_group.add_argument("OEbinconv", help="Converts list of OE Properties to bep files." )
+parser_group.add_argument("--verchange", help="Converts bep from one game to another.", action="store_true")
+parser_group.add_argument("--OEbinconv", help="Converts list of OE Properties to bep files.", action="store_true")
+parser_group.add_argument("--getmoves", help="Converts bep from one game to another.", action="store_true")
 args = parser.parse_args()
 kfile = Path(args.file)
 file_bool = kfile.is_file()
@@ -50,25 +51,44 @@ file_name = kfile.stem
 # Global Dictionaries
 bep_dictionary = tree()  # Stores bep data
 game_dictionary_DE = jsonKeys2int(import_json(Path(""), "Game Dictionary DE"))
-game_dictionary_OE = jsonKeys2int(import_json(Path(""), "Game Dictionary OE"))
 
 # Actual Code
-cur_game = check_game_choice(game_dictionary_DE, "Select the number of the game you are importing from")
-bep_game = game_dictionary_DE[int(cur_game)]
+if not args.getmoves and not args.OEbinconv:
+    cur_game = check_game_choice(game_dictionary_DE, "Select the number of the game you are importing from")
+    bep_game = game_dictionary_DE[int(cur_game)]
 
 if args.verchange:
     ver_change_to = check_game_choice(game_dictionary_DE, "Choose the game you would like to change the version to:")
     bep_game_2 = game_dictionary_DE[int(ver_change_to)]
 
 if args.OEbinconv:
-    ver_change_from = check_game_choice(game_dictionary_OE, "Choose which OE game you are extracting property.bin data from.")
-    oe_game = game_dictionary_OE[int(ver_change_from)]
-    if yes_or_no("Would you like to define custom move list json & mep folder? Defaults are move_list.json & MEP."):
-        move_list_json = Path("move_list.json")
+    if not yes_or_no("Would you like to define custom move list json & mep folder? Defaults are move_list.json & MEP."):
+        move_list_path = "move_list"
+        move_list_json = import_json(Path(""), move_list_path)
         mep_folder = Path("MEP")
     else:
-        move_list_json = get_pathobject_from_string("Type the name of your move list json.", ".json")
+        move_list_path = input('Type the json name (without extension): ')
+        move_list_json = import_json(Path(""), move_list_path)
         mep_folder = get_pathobject_from_string("Type the folder containing the appropriate game's mep files.")
+
+if args.getmoves:
+    jsonfile = import_json(Path(""), file_name)
+    if "Old Engine Game" in jsonfile: commandsetname = list(jsonfile.keys())[2]
+    else: commandsetname = list(jsonfile.keys())[2]
+    x = 0
+    MoveIDXDict = {}
+    for move in list(jsonfile[commandsetname]["Move Table"].keys()):
+        if "Animation Used" in jsonfile[commandsetname]["Move Table"][move]:
+            Animname = jsonfile[commandsetname]["Move Table"][move]["Animation Used"]
+            MoveIDXDict[Animname] = x
+        elif "Animation Table" in jsonfile[commandsetname]["Move Table"][move]:
+            for animtable in list(jsonfile[commandsetname]["Move Table"][move]["Animation Table"].keys()):
+                Animname = jsonfile[commandsetname]["Move Table"][move]["Animation Table"][animtable]["Animation Used"]
+                MoveIDXDict[Animname] = x
+        x = x + 1
+    MoveIDXDict.pop('Null', None)
+    export_json(Path(""), "move_list", MoveIDXDict)
+    sys.exit()
 
 
 if file_bool:  # Single File
@@ -83,14 +103,14 @@ if file_bool:  # Single File
             change_bep_version(f, file_name, bep_prop_dict, bep_prop_dict_2, bep_game, bep_game_2)
         elif args.OEbinconv: raise Exception("Property.bin file has improper extension?")
         else:
-            json_property_path = Path("GameTypes/" + bep_game)
+            json_property_path = Path("DE_GameTypes/" + bep_game)
             bep_prop_dict = jsonKeys2int(import_json(json_property_path, "Property_Types"))
             convert_bep_to_json(f, bep_dictionary, file_name, bep_game, bep_prop_dict)
             export_json(Path.cwd(), file_name, bep_dictionary)
     elif file_extension == '.json':
         if args.verchange: raise Exception("Can't perform version change on json file")
         elif args.OEbinconv: raise Exception("Property.bin file has improper extension?")
-        json_property_path = Path("DE GameTypes/" + bep_game)
+        json_property_path = Path("DE_GameTypes/" + bep_game)
         bep_prop_dict = jsonKeys2int(import_json(json_property_path, "Property_Types"))
         bep_json = import_json(Path(""), file_name)
         convert_json_to_bep(bep_json, bep_prop_dict, bep_game)
@@ -99,12 +119,7 @@ if file_bool:  # Single File
             f = BinaryReader(input_file.read())
         if args.verchange: raise Exception("Can't perform version change on bin file")
         elif args.OEbinconv:
-            json_property_path = Path("DE GameTypes/" + bep_game)
-            json_property_path_2 = Path("OE GameTypes/" + oe_game)
-            bep_prop_dict = jsonKeys2int(import_json(json_property_path, "Property_Types"))
-            bep_prop_dict_2 = jsonKeys2int(import_json(json_property_path_2, "Property_Types"))
-
-            convert_property_bin_to_beps(f, oe_game, bep_game, jsonKeys2int(move_list_json), mep_folder, bep_prop_dict_2, bep_prop_dict)
+            convert_property_bin_to_beps(f, jsonKeys2int(move_list_json), mep_folder)
 
 
 else:
@@ -115,8 +130,8 @@ else:
         bep_name = current_bep.stem
         print("Current bep: " + bep_name + ".bep")
         if args.verchange:
-            json_property_path = Path("DE GameTypes/" + bep_game)
-            json_property_path_2 = Path("DE GameTypes/" + bep_game_2)
+            json_property_path = Path("DE_GameTypes/" + bep_game)
+            json_property_path_2 = Path("DE_GameTypes/" + bep_game_2)
             bep_prop_dict = jsonKeys2int(import_json(json_property_path, "Property_Types"))
             bep_prop_dict_2 = jsonKeys2int(import_json(json_property_path_2, "Property_Types"))
             if current_bep.is_file() and current_bep.suffix == ".bep":
@@ -127,7 +142,7 @@ else:
             raise Exception("Must input a property.bin file, not a folder.")
         else:
             if current_bep.is_file() and current_bep.suffix == ".bep":
-                json_property_path = Path("DE GameTypes/" + bep_game)
+                json_property_path = Path("DE_GameTypes/" + bep_game)
                 bep_prop_dict = jsonKeys2int(import_json(json_property_path, "Property_Types"))
                 convert_bep_to_json(f, bep_dictionary, bep_name, bep_game, bep_prop_dict)
     if args.verchange:

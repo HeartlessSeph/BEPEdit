@@ -11,8 +11,8 @@ def change_property_ver_from_json(bepfile, new_file, base_game_dict, conv_game_d
             property_type_text = base_game_dict[property_type]
             new_property_type = swap_dict_keys_values(conv_game_dict)[property_type_text]
             print(property_type_text)
-            prop_json_orig_path = Path("GameTypes/" + base_game + "/Properties")
-            prop_json_new_path = Path("GameTypes/" + conv_game + "/Properties")
+            prop_json_orig_path = Path("DE_GameTypes/" + base_game + "/Properties")
+            prop_json_new_path = Path("DE_GameTypes/" + conv_game + "/Properties")
             prop_json_orig = import_json(prop_json_orig_path, property_type_text)
             prop_json_new = import_json(prop_json_new_path, property_type_text)
 
@@ -112,8 +112,8 @@ def change_property_ver_from_json(bepfile, new_file, base_game_dict, conv_game_d
                         if prop_json_orig["Property"][sub_property]["Enumeration"] != "None" and prop_json_new["Property"][sub_property]["Enumeration"] != "None":
                             old_enumeration_name = prop_json_orig["Property"][sub_property]["Enumeration"]
                             new_enumeration_name = prop_json_new["Property"][sub_property]["Enumeration"]
-                            enum_json_orig_path = Path("GameTypes/" + base_game + "/Properties/Enumerations")
-                            enum_json_new_path = Path("GameTypes/" + conv_game + "/Properties/Enumerations")
+                            enum_json_orig_path = Path("DE_GameTypes/" + base_game + "/Properties/Enumerations")
+                            enum_json_new_path = Path("DE_GameTypes/" + conv_game + "/Properties/Enumerations")
                             enum_json_orig = jsonKeys2int(import_json(enum_json_orig_path, old_enumeration_name))
                             enum_json_new = jsonKeys2int(import_json(enum_json_new_path, new_enumeration_name))
                             if prop_json_orig["Property"][sub_property]["Value"] in enum_json_orig:
@@ -276,7 +276,7 @@ def convert_bep_to_json(bepfile, bep_dict, bep_name, base_game, base_game_dict):
                 bep_dict[bep_name]["Property " + str(y) + " (" + property_type_text + ")"]["Property Header Unk6"] = bepfile.read_uint32()
                 bep_dict[bep_name]["Property " + str(y) + " (" + property_type_text + ")"]["Property Header Unk7"] = bepfile.read_uint32()
                 print(property_type_text)
-                prop_json_orig_path = Path("GameTypes/" + base_game + "/Properties")
+                prop_json_orig_path = Path("DE_GameTypes/" + base_game + "/Properties")
                 prop_json_orig = import_json(prop_json_orig_path, property_type_text)
 
                 if prop_json_orig["Structure Type"] == "Generic":
@@ -350,7 +350,7 @@ def convert_bep_to_json(bepfile, bep_dict, bep_name, base_game, base_game_dict):
 
                         if prop_json_orig["Property"][sub_property]["Enumeration"] != "None" and data_type != "End Structure":
                             old_enumeration_name = prop_json_orig["Property"][sub_property]["Enumeration"]
-                            enum_json_orig_path = Path("GameTypes/" + base_game + "/Properties/Enumerations")
+                            enum_json_orig_path = Path("DE_GameTypes/" + base_game + "/Properties/Enumerations")
                             enum_json_orig = jsonKeys2int(import_json(enum_json_orig_path, old_enumeration_name))
                             if prop_json_orig["Property"][sub_property]["Value"] in enum_json_orig:
                                 bep_dict[bep_name]["Property " + str(y) + " (" + property_type_text + ")"][sub_property] = enum_json_orig[prop_json_orig["Property"][sub_property]["Value"]]
@@ -457,11 +457,11 @@ def convert_json_to_bep(bep_json, base_game_dict, base_game, bep_path=Path("")):
 
                 if property_type in base_game_dict:
                     property_type_text = base_game_dict[property_type]
-                    prop_json_orig_path = Path("GameTypes/" + base_game + "/Properties")
+                    prop_json_orig_path = Path("DE_GameTypes/" + base_game + "/Properties")
                     prop_json_orig = import_json(prop_json_orig_path, property_type_text)
 
                     if prop_json_orig["Structure Type"] == "Generic":
-                        temp_dict = remove_keys_from_dict(bep_json[bep_name][bep_property], 15)
+                        temp_dict = remove_keys_from_dict(bep_json[bep_name][bep_property], 14)
                         for sub_property in list(temp_dict.keys()):
                             writer.write_uint32(temp_dict[sub_property])
                             property_size += 4
@@ -475,7 +475,7 @@ def convert_json_to_bep(bep_json, base_game_dict, base_game, bep_path=Path("")):
 
                             if prop_json_orig["Property"][sub_property]["Enumeration"] != "None" and data_type != "End Structure":
                                 old_enumeration_name = prop_json_orig["Property"][sub_property]["Enumeration"]
-                                enum_json_orig_path = Path("GameTypes/" + base_game + "/Properties/Enumerations")
+                                enum_json_orig_path = Path("DE_GameTypes/" + base_game + "/Properties/Enumerations")
                                 enum_json_orig = swap_dict_keys_values(jsonKeys2int(import_json(enum_json_orig_path, old_enumeration_name)))
                                 if sub_prop_val in enum_json_orig:
                                     sub_prop_val = enum_json_orig[sub_prop_val]
@@ -545,10 +545,10 @@ def convert_json_to_bep(bep_json, base_game_dict, base_game, bep_path=Path("")):
                                 else:
                                     if prop_json_orig["Property"][next_sub_prop]["Enumeration"] != "None":
                                         new_enumeration_name = prop_json_orig["Property"][next_sub_prop]["Enumeration"]
-                                        enum_json_new_path = Path("GameTypes/" + base_game + "/Properties/Enumerations")
+                                        enum_json_new_path = Path("DE_GameTypes/" + base_game + "/Properties/Enumerations")
                                         enum_json_new = swap_dict_keys_values(jsonKeys2int(import_json(enum_json_new_path, new_enumeration_name)))
                                         if next_data_value in enum_json_new:
-                                            next_data_value = enum_json_new[sub_prop_val]
+                                            next_data_value = enum_json_new[next_data_value]
                                     nibble_pair = convert_nibbles_to_byte(sub_prop_val, next_data_value)
                                     writer.write_uint8(nibble_pair)
                                 property_size += 1
@@ -556,11 +556,9 @@ def convert_json_to_bep(bep_json, base_game_dict, base_game, bep_path=Path("")):
                                 pass
 
                             elif data_type == "End Structure":
-                                prev_sub_prop = get_nth_key(prop_json_orig["Property"], index - 1)
+                                prev_sub_prop = get_nth_key(bep_json[bep_name][bep_property], index + 14)
                                 last_key_in_index = get_dict_key_index(bep_json[bep_name][bep_property], prev_sub_prop)
                                 temp_dict = remove_keys_from_dict(bep_json[bep_name][bep_property], last_key_in_index)
-                                print(temp_dict)
-                                print(sub_property)
                                 for temp_sub_property in list(temp_dict.keys()):
                                     writer.write_uint32(temp_dict[temp_sub_property])
                                     property_size += 4
@@ -573,7 +571,7 @@ def convert_json_to_bep(bep_json, base_game_dict, base_game, bep_path=Path("")):
 
             else:
                 property_size = 0
-                temp_dict = remove_keys_from_dict(bep_json[bep_name][bep_property], 8)
+                temp_dict = remove_keys_from_dict(bep_json[bep_name][bep_property], 7)
                 for sub_property in list(temp_dict.keys()):
                     writer.write_uint32(temp_dict[sub_property])
                     property_size += 4

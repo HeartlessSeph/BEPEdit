@@ -71,7 +71,7 @@ def import_json(target_path, name):  # Goes through a directory, then loads json
     import_file = target_path / (name + r'.json')
     with import_file.open() as input_file:
         json_array = json.loads(input_file.read())
-        return (json_array)
+        return json_array
 
 
 def convert_hex_to_hexstring(hex_value):
@@ -107,7 +107,7 @@ def get_nth_key(dictionary, n=0):  # Not my function, taken from online
     raise IndexError("dictionary index out of range")
 
 
-def get_pathobject_from_string(message, file_extension = ""):
+def get_pathobject_from_string(message, file_extension=""):
     print(message)
     print("")
     file_string = input('Type the file/folder name: ')
@@ -116,10 +116,29 @@ def get_pathobject_from_string(message, file_extension = ""):
     return Path(file_string)
 
 
-def yes_or_no(question): # Not my function, taken from https://gist.github.com/garrettdreyfus/8153571
+def yes_or_no(question):  # Not my function, taken from https://gist.github.com/garrettdreyfus/8153571
     while "the answer is invalid":
-        reply = str(input(question+' (y/n): ')).lower().strip()
+        reply = str(input(question + ' (y/n): ')).lower().strip()
         if reply[:1] == 'y':
             return True
         if reply[:1] == 'n':
             return False
+
+
+def write_zero_bytes(my_file, num_bytes):
+    x = 0
+    while x < num_bytes:
+        my_file.write_uint8(0)
+        x += 1
+
+
+def bitfield(num):
+    # bitfieldlist = [1 if x=='1' else 0 for x in "{:08b}".format(num)]
+    bitfieldlist = [1 if num & (1 << (7 - n)) else 0 for n in range(8)]
+    if len(bitfieldlist) < 8:
+        append = 8 - len(bitfieldlist)
+        x = 0
+        while x < append:
+            bitfieldlist.append(0)
+            x = x + 1
+    return bitfieldlist
