@@ -88,7 +88,7 @@ def change_property_ver_from_json(bepfile, new_file, base_game_dict, conv_game_d
                         property_size += num_bytes
                     if "string" in data_type:
                         end_char = len(data_type) - 1
-                        num_chars = int(data_type[6: end_char])
+                        num_chars = int(data_type[7: end_char])
                         prop_json_orig["Property"][sub_property]["Value"] = bepfile.read_str(num_chars)
                         property_size += num_chars
                     if data_type == "nibble_1":
@@ -176,7 +176,7 @@ def change_property_ver_from_json(bepfile, new_file, base_game_dict, conv_game_d
                         property_size += num_bytes
                     if "string" in data_type:
                         end_char = len(data_type) - 1
-                        num_chars = int(data_type[6: end_char])
+                        num_chars = int(data_type[7: end_char])
                         if num_chars > len(current_value):
                             len_diff = num_chars - len(current_value)
                             new_file.write_str(current_value)
@@ -322,11 +322,13 @@ def convert_bep_to_json(bepfile, bep_dict, bep_name, base_game, base_game_dict):
                         elif "bytes" in data_type:
                             end_char = len(data_type) - 1
                             num_bytes = int(data_type[6: end_char])
-                            prop_json_orig["Property"][sub_property]["Value"] = bepfile.read_bytes(num_bytes)
+                            prop_json_orig["Property"][sub_property]["Value"] = convert_hex_to_hexstring(bepfile.read_bytes(num_bytes))
                             property_size_temp += num_bytes
                         elif "string" in data_type:
                             end_char = len(data_type) - 1
-                            num_chars = int(data_type[6: end_char])
+                            num_chars = int(data_type[7: end_char])
+                            print(num_chars)
+                            print(bepfile.pos())
                             prop_json_orig["Property"][sub_property]["Value"] = bepfile.read_str(num_chars)
                             property_size_temp += num_chars
                         elif data_type == "nibble_1":
@@ -513,19 +515,22 @@ def convert_json_to_bep(bep_json, base_game_dict, base_game, bep_path=Path("")):
                             elif "bytes" in data_type:
                                 end_char = len(data_type) - 1
                                 num_bytes = int(data_type[6: end_char])
-                                if num_bytes < len(sub_prop_val):
+                                sub_prop_val = sub_prop_val.replace(" ", "")
+                                if num_bytes < len(sub_prop_val) / 2:
                                     cur_byte_nums = 0
-                                    sub_prop_val = sub_prop_val[:num_bytes]
+                                    sub_prop_val = convert_hexstring_to_hex(sub_prop_val[:(num_bytes * 2)])
                                 else:
-                                    cur_byte_nums = num_bytes - len(sub_prop_val)
+                                    cur_byte_nums = num_bytes - (len(sub_prop_val) / 2)
+                                    sub_prop_val = convert_hexstring_to_hex(sub_prop_val)
                                 writer.write_bytes(sub_prop_val)
                                 x = 0
                                 while x < cur_byte_nums:
                                     writer.write_uint8(0)
+                                    x += 1
                                 property_size += num_bytes
                             elif "string" in data_type:
                                 end_char = len(data_type) - 1
-                                num_chars = int(data_type[6: end_char])
+                                num_chars = int(data_type[7: end_char])
                                 if num_chars < len(sub_prop_val):
                                     cur_char_nums = 0
                                     sub_prop_val = sub_prop_val[:num_chars]
@@ -535,6 +540,7 @@ def convert_json_to_bep(bep_json, base_game_dict, base_game, bep_path=Path("")):
                                 x = 0
                                 while x < cur_char_nums:
                                     writer.write_uint8(0)
+                                    x += 1
                                 property_size += num_chars
                             elif data_type == "nibble_1":
                                 next_sub_prop = get_nth_key(prop_json_orig["Property"], index + 1)
