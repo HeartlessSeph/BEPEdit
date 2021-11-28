@@ -1,5 +1,6 @@
 from pathlib import Path
 import json
+from ruamel.yaml import YAML
 from collections import defaultdict
 
 
@@ -29,7 +30,7 @@ def remove_keys_from_dict(cur_dict, num_keys):
         for k, v in cur_dict.items():
             if get_dict_key_index(cur_dict, k) > num_keys: newdict[k] = v
         return newdict
-    return x
+    return cur_dict
 
 
 def tree():  # Weird self expanding dictionary. Will have to study how it actually works at some point.
@@ -40,10 +41,10 @@ def tree():  # Weird self expanding dictionary. Will have to study how it actual
 
 
 def create_folder(cur_dir, new_folder):  # Creates a folder if it does not exist.
-    '''
+    """
     :param cur_dir: Path object
     :param new_folder: String
-    '''
+    """
 
     my_path = cur_dir / new_folder
     my_path.mkdir(exist_ok=True)
@@ -51,11 +52,11 @@ def create_folder(cur_dir, new_folder):  # Creates a folder if it does not exist
 
 
 def export_json(target_path, filename, data):  # Writes a json to a certain directory
-    '''
+    """
     :param target_path: Path object
     :param filename: String
     :param data: Dictionary
-    '''
+    """
 
     jsonFile = json.dumps(data, ensure_ascii=False, indent=2)
     jsonPath = target_path / (filename + r'.json')
@@ -64,14 +65,40 @@ def export_json(target_path, filename, data):  # Writes a json to a certain dire
 
 
 def import_json(target_path, name):  # Goes through a directory, then loads json info into a dict
-    '''
+    """
     :param target_path: Path Object
     :param name: String
-    '''
+    """
     import_file = target_path / (name + r'.json')
     with import_file.open() as input_file:
         json_array = json.loads(input_file.read())
         return json_array
+
+
+def export_yaml(target_path, filename, data):  # Writes a yaml to a certain directory
+    """
+    :param target_path: Path object
+    :param filename: String
+    :param data: Dictionary
+    """
+    new_data = json.loads(json.dumps(data))
+    yaml = YAML(typ='safe', pure=True)
+    yaml.sort_base_mapping_type_on_output = False
+    yaml.indent(mapping=2, sequence=5, offset=4)
+    yaml.default_flow_style = False
+    yamlPath = target_path / (filename + r'.yaml')
+    yaml.dump(new_data, yamlPath)
+    print("Yaml file written to " + str(yamlPath))
+
+
+def import_yaml(target_path, name):  # Goes through a directory, then loads yaml info into a dict
+    """
+    :param target_path: Path Object
+    :param name: String
+    """
+    import_file = target_path / (name + r'.yaml')
+    yaml = YAML(typ='safe')
+    return yaml.load(import_file)
 
 
 def convert_hex_to_hexstring(hex_value):

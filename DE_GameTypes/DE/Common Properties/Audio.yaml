@@ -1,0 +1,46 @@
+Structure Type: Custom
+Property:
+  Unknown 0:
+    DataType: uint32
+    Default: 0
+    Enumeration: None
+  Sound Cue ID 1:
+    DataType: uint8
+    Default: 0
+    Enumeration: None
+  Sound Cue ID 2:
+    DataType: uint8
+    Default: 0
+    Enumeration: None
+  Sound Container ID:
+    DataType: uint16
+    Default: 0
+    Enumeration: None
+  Unknown 1:
+    DataType: int32
+    Default: 0
+    Enumeration: None
+  Unknown 2:
+    DataType: float
+    Default: 0
+    Enumeration: None
+  Unknown 3:
+    DataType: float
+    Default: 0
+    Enumeration: None
+  Unknown 4:
+    DataType: float
+    Default: 0
+    Enumeration: None
+  Unknown 5:
+    DataType: float
+    Default: 0
+    Enumeration: None
+  Unknown 6:
+    DataType: float
+    Default: 0
+    Enumeration: None
+  Finish Structure:
+    DataType: End Structure
+    Default: 0
+    Enumeration: None

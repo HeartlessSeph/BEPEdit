@@ -1,20 +1,30 @@
 from binary_reader import BinaryReader
+import os
 import sys
 
 sys.path.append("..")
 from cmn_functions import *
 
 
-def change_property_ver_from_json(bepfile, new_file, base_game_dict, conv_game_dict, base_game, conv_game, property_type, property_section, header):
+def change_property_ver_from_json(bepfile, new_file, base_game_dict, conv_game_dict, base_game, base_engine, conv_game, conv_engine, property_type, property_section, header):
+    script_folder = str(Path(sys.argv[0]).parents[0])
     if property_type in base_game_dict:
         if base_game_dict[property_type] in swap_dict_keys_values(conv_game_dict):
             property_type_text = base_game_dict[property_type]
             new_property_type = swap_dict_keys_values(conv_game_dict)[property_type_text]
             print(property_type_text)
-            prop_json_orig_path = Path("DE_GameTypes/" + base_game + "/Properties")
-            prop_json_new_path = Path("DE_GameTypes/" + conv_game + "/Properties")
-            prop_json_orig = import_json(prop_json_orig_path, property_type_text)
-            prop_json_new = import_json(prop_json_new_path, property_type_text)
+            prop_json_orig_path = Path(script_folder + "/DE_GameTypes/" + base_engine + "/" + base_game)
+            prop_json_new_path = Path(script_folder + "/DE_GameTypes/" + conv_engine + "/" + conv_game)
+            if os.path.exists(Path(str(prop_json_orig_path) + "/" + property_type_text + ".yaml")):
+                prop_json_orig = import_yaml(prop_json_orig_path, property_type_text)
+            else:
+                prop_json_orig_path = Path(script_folder + "/DE_GameTypes/" + base_engine + "/Common Properties")
+                prop_json_orig = import_yaml(prop_json_orig_path, property_type_text)
+            if os.path.exists(Path(str(prop_json_new_path) + "/" + property_type_text + ".yaml")):
+                prop_json_new = import_yaml(prop_json_new_path, property_type_text)
+            else:
+                prop_json_new_path = Path(script_folder + "/DE_GameTypes/" + conv_engine + "/Common Properties")
+                prop_json_new = import_yaml(prop_json_new_path, property_type_text)
 
             if prop_json_orig["Structure Type"] == "Generic":
                 new_file.write_bytes(header)
@@ -112,8 +122,9 @@ def change_property_ver_from_json(bepfile, new_file, base_game_dict, conv_game_d
                         if prop_json_orig["Property"][sub_property]["Enumeration"] != "None" and prop_json_new["Property"][sub_property]["Enumeration"] != "None":
                             old_enumeration_name = prop_json_orig["Property"][sub_property]["Enumeration"]
                             new_enumeration_name = prop_json_new["Property"][sub_property]["Enumeration"]
-                            enum_json_orig_path = Path("DE_GameTypes/" + base_game + "/Properties/Enumerations")
-                            enum_json_new_path = Path("DE_GameTypes/" + conv_game + "/Properties/Enumerations")
+                            # prop_json_orig_path
+                            enum_json_orig_path = Path(str(prop_json_orig_path) + "/Enumerations")
+                            enum_json_new_path = Path(str(prop_json_new_path) + "/Enumerations")
                             enum_json_orig = jsonKeys2int(import_json(enum_json_orig_path, old_enumeration_name))
                             enum_json_new = jsonKeys2int(import_json(enum_json_new_path, new_enumeration_name))
                             if prop_json_orig["Property"][sub_property]["Value"] in enum_json_orig:
@@ -231,7 +242,7 @@ def change_property_ver_from_json(bepfile, new_file, base_game_dict, conv_game_d
             z = z + 1
 
 
-def convert_bep_to_json(bepfile, bep_dict, bep_name, base_game, base_game_dict):
+def convert_bep_to_json(bepfile, bep_dict, bep_name, base_game, base_engine, base_game_dict):
     """
     :param base_game_dict: Dictionary
     :param base_game: String
@@ -239,6 +250,7 @@ def convert_bep_to_json(bepfile, bep_dict, bep_name, base_game, base_game_dict):
     :param bep_dict: tree()
     :param bep_name: String
     """
+    script_folder = str(Path(sys.argv[0]).parents[0])
     bepfile.seek(0)
     bepfile.set_endian(False)
     if bepfile.read_str(4) != '_PEB':
@@ -276,8 +288,12 @@ def convert_bep_to_json(bepfile, bep_dict, bep_name, base_game, base_game_dict):
                 bep_dict[bep_name]["Property " + str(y) + " (" + property_type_text + ")"]["Property Header Unk6"] = bepfile.read_uint32()
                 bep_dict[bep_name]["Property " + str(y) + " (" + property_type_text + ")"]["Property Header Unk7"] = bepfile.read_uint32()
                 print(property_type_text)
-                prop_json_orig_path = Path("DE_GameTypes/" + base_game + "/Properties")
-                prop_json_orig = import_json(prop_json_orig_path, property_type_text)
+                prop_json_orig_path = Path(script_folder + "/DE_GameTypes/" + base_engine + "/" + base_game)
+                if os.path.exists(Path(str(prop_json_orig_path) + "/" + property_type_text + ".yaml")):
+                    prop_json_orig = import_yaml(prop_json_orig_path, property_type_text)
+                else:
+                    prop_json_orig_path = Path(script_folder + "/DE_GameTypes/" + base_engine + "/Common Properties")
+                    prop_json_orig = import_yaml(prop_json_orig_path, property_type_text)
 
                 if prop_json_orig["Structure Type"] == "Generic":
                     z = 0
@@ -352,7 +368,7 @@ def convert_bep_to_json(bepfile, bep_dict, bep_name, base_game, base_game_dict):
 
                         if prop_json_orig["Property"][sub_property]["Enumeration"] != "None" and data_type != "End Structure":
                             old_enumeration_name = prop_json_orig["Property"][sub_property]["Enumeration"]
-                            enum_json_orig_path = Path("DE_GameTypes/" + base_game + "/Properties/Enumerations")
+                            enum_json_orig_path = Path(str(prop_json_orig_path) + "/Enumerations")
                             enum_json_orig = jsonKeys2int(import_json(enum_json_orig_path, old_enumeration_name))
                             if prop_json_orig["Property"][sub_property]["Value"] in enum_json_orig:
                                 bep_dict[bep_name]["Property " + str(y) + " (" + property_type_text + ")"][sub_property] = enum_json_orig[prop_json_orig["Property"][sub_property]["Value"]]
@@ -397,16 +413,14 @@ def convert_bep_to_json(bepfile, bep_dict, bep_name, base_game, base_game_dict):
         y = y + 1
 
 
-def convert_json_to_bep(bep_json, base_game_dict, base_game, bep_path=Path("")):
+def convert_json_to_bep(bep_json, base_game_dict, base_game, base_engine, bep_path=Path("")):
     """
     :param base_game_dict: Dictionary
     :param base_game: String
-    :param bepfile: BinaryStream Buffer
-    :param bep_dict: tree()
-    :param bep_name: String
+    :param base_engine: String
     :param bep_path: Path Object
     """
-
+    script_folder = str(Path(sys.argv[0]).parents[0])
     for bep_name in list(bep_json.keys()):
         writer = BinaryReader()
         writer.write_uint64(9701773407)
@@ -459,8 +473,14 @@ def convert_json_to_bep(bep_json, base_game_dict, base_game, bep_path=Path("")):
 
                 if property_type in base_game_dict:
                     property_type_text = base_game_dict[property_type]
-                    prop_json_orig_path = Path("DE_GameTypes/" + base_game + "/Properties")
-                    prop_json_orig = import_json(prop_json_orig_path, property_type_text)
+                    print(property_type_text)
+
+                    prop_json_orig_path = Path(script_folder + "/DE_GameTypes/" + base_engine + "/" + base_game)
+                    if os.path.exists(Path(str(prop_json_orig_path) + "/" + property_type_text + ".yaml")):
+                        prop_json_orig = import_yaml(prop_json_orig_path, property_type_text)
+                    else:
+                        prop_json_orig_path = Path(script_folder + "/DE_GameTypes/" + base_engine + "/Common Properties")
+                        prop_json_orig = import_yaml(prop_json_orig_path, property_type_text)
 
                     if prop_json_orig["Structure Type"] == "Generic":
                         temp_dict = remove_keys_from_dict(bep_json[bep_name][bep_property], 14)
@@ -477,7 +497,7 @@ def convert_json_to_bep(bep_json, base_game_dict, base_game, bep_path=Path("")):
 
                             if prop_json_orig["Property"][sub_property]["Enumeration"] != "None" and data_type != "End Structure":
                                 old_enumeration_name = prop_json_orig["Property"][sub_property]["Enumeration"]
-                                enum_json_orig_path = Path("DE_GameTypes/" + base_game + "/Properties/Enumerations")
+                                enum_json_orig_path = Path(str(prop_json_orig_path) + "/Enumerations")
                                 enum_json_orig = swap_dict_keys_values(jsonKeys2int(import_json(enum_json_orig_path, old_enumeration_name)))
                                 if sub_prop_val in enum_json_orig:
                                     sub_prop_val = enum_json_orig[sub_prop_val]
@@ -551,7 +571,7 @@ def convert_json_to_bep(bep_json, base_game_dict, base_game, bep_path=Path("")):
                                 else:
                                     if prop_json_orig["Property"][next_sub_prop]["Enumeration"] != "None":
                                         new_enumeration_name = prop_json_orig["Property"][next_sub_prop]["Enumeration"]
-                                        enum_json_new_path = Path("DE_GameTypes/" + base_game + "/Properties/Enumerations")
+                                        enum_json_new_path = Path(str(prop_json_orig_path) + "/Enumerations")
                                         enum_json_new = swap_dict_keys_values(jsonKeys2int(import_json(enum_json_new_path, new_enumeration_name)))
                                         if next_data_value in enum_json_new:
                                             next_data_value = enum_json_new[next_data_value]
@@ -597,7 +617,8 @@ def convert_json_to_bep(bep_json, base_game_dict, base_game, bep_path=Path("")):
             f.write(writer.buffer())
 
 
-def change_bep_version(bepfile, bep_name, bep_game_base_dict, bep_game_conv_dict, bep_game_base, bep_game_conv, bep_path=Path("")):
+def change_bep_version(bepfile, bep_name, bep_game_base_dict, bep_game_conv_dict, bep_game_base, base_engine, bep_game_conv, conv_engine, bep_path=Path("")):
+    script_folder = str(Path(sys.argv[0]).parents[0])
     writer = BinaryReader()
     bepfile.seek(0)
     bepfile.set_endian(False)
@@ -614,7 +635,7 @@ def change_bep_version(bepfile, bep_name, bep_game_base_dict, bep_game_conv_dict
         property_section = bepfile.read_uint16()
         property_type = bepfile.read_uint16()
 
-        change_property_ver_from_json(bepfile, writer, bep_game_base_dict, bep_game_conv_dict, bep_game_base, bep_game_conv, property_type, property_section,
+        change_property_ver_from_json(bepfile, writer, bep_game_base_dict, bep_game_conv_dict, bep_game_base, base_engine, bep_game_conv, conv_engine, property_type, property_section,
                                       header_stuff)
 
         if bepfile.size() == bepfile.pos() + 80: x = 1
@@ -625,6 +646,9 @@ def change_bep_version(bepfile, bep_name, bep_game_base_dict, bep_game_conv_dict
     bep_name = bep_name + ".bep"
     new_file_path = Path(bep_path / "Converted" / bep_name)
     new_file_dir = Path(bep_path / "Converted")
-    new_file_dir.mkdir(exist_ok=True)
+    try:
+        new_file_dir.mkdir(exist_ok=True)
+    except FileExistsError:
+        pass
     with open(new_file_path, 'wb') as f:
         f.write(writer.buffer())

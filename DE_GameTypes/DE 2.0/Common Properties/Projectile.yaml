@@ -1,0 +1,6 @@
+Structure Type: Custom
+Property:
+  Projectile Type:
+    DataType: uint32
+    Default: 0
+    Enumeration: None

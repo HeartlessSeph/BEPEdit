@@ -1,0 +1,6 @@
+Structure Type: Custom
+Property:
+  Heat Gain/Loss:
+    DataType: int32
+    Default: 0
+    Enumeration: None

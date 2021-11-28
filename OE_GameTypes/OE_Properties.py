@@ -126,7 +126,7 @@ def convert_property_bin_to_beps(f, move_list, mep_folder, file_directory=Path("
                     f.seek(cur_pos)
 
                 elif PropertyType == 10:  # Self Contained Hitbox
-                    damage = structnum * 10
+                    damage = struct_num * 10
                     write_zero_bytes(writer, 64)
                     writer.write_bytes(b'\x0C\x00\x61\x00\x30\x00\x00\x00\xFF\xFF\xFF\xFF\x00\x00\x00\x00')
                     writer.write_bytes(b'\x61\x00\x00\x00')

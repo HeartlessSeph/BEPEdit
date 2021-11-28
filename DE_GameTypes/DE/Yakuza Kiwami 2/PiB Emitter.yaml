@@ -1,0 +1,170 @@
+Structure Type: Custom
+Property:
+  PiB Emitter ID:
+    DataType: uint32
+    Default: 1
+    Enumeration: PiBs_K2
+  PiB Unknown 1:
+    DataType: uint32
+    Default: 0
+    Enumeration: None
+  Null 1:
+    DataType: float
+    Default: 0
+    Enumeration: None
+  Null 2:
+    DataType: float
+    Default: 0
+    Enumeration: None
+  PiB Unknown 2:
+    DataType: float
+    Default: 0
+    Enumeration: None
+  Null 3:
+    DataType: float
+    Default: 0
+    Enumeration: None
+  PiB Unknown 3:
+    DataType: float
+    Default: 0
+    Enumeration: None
+  Null 4:
+    DataType: float
+    Default: 0
+    Enumeration: None
+  Null 5:
+    DataType: float
+    Default: 0
+    Enumeration: None
+  Effect Amount (Horizontal):
+    DataType: float
+    Default: 0
+    Enumeration: None
+  Null 6:
+    DataType: float
+    Default: 0
+    Enumeration: None
+  Null 7:
+    DataType: float
+    Default: 0
+    Enumeration: None
+  PiB Unknown 4:
+    DataType: float
+    Default: 0
+    Enumeration: None
+  Null 8:
+    DataType: float
+    Default: 0
+    Enumeration: None
+  PiB Unknown 5:
+    DataType: float
+    Default: 0
+    Enumeration: None
+  Null 9:
+    DataType: float
+    Default: 0
+    Enumeration: None
+  Effect X Coordinate:
+    DataType: float
+    Default: 0
+    Enumeration: None
+  Effect Y Coordinate:
+    DataType: float
+    Default: 0
+    Enumeration: None
+  Null 10:
+    DataType: float
+    Default: 0
+    Enumeration: None
+  PiB Unknown 6:
+    DataType: float
+    Default: 0
+    Enumeration: None
+  Effect Width:
+    DataType: float
+    Default: 0
+    Enumeration: None
+  Effect Height:
+    DataType: float
+    Default: 0
+    Enumeration: None
+  Effect Depth:
+    DataType: float
+    Default: 0
+    Enumeration: None
+  Null 11:
+    DataType: float
+    Default: 0
+    Enumeration: None
+  Null 12:
+    DataType: float
+    Default: 0
+    Enumeration: None
+  Effect Color Overlay (RGBA):
+    DataType: bytes(4)
+    Default: 0
+    Enumeration: None
+  Null 13:
+    DataType: float
+    Default: 0
+    Enumeration: None
+  Effect Animation Speed:
+    DataType: float
+    Default: 0
+    Enumeration: None
+  Effect Lighting Intensity:
+    DataType: float
+    Default: 0
+    Enumeration: None
+  PiB Unknown 7:
+    DataType: float
+    Default: 0
+    Enumeration: None
+  PiB Unknown 8:
+    DataType: float
+    Default: 0
+    Enumeration: None
+  Null 14:
+    DataType: float
+    Default: 0
+    Enumeration: None
+  Null 15 (All FF):
+    DataType: bytes(32)
+    Default: 0
+    Enumeration: None
+  Null 16:
+    DataType: float
+    Default: 0
+    Enumeration: None
+  Null 17:
+    DataType: float
+    Default: 0
+    Enumeration: None
+  Null 18:
+    DataType: float
+    Default: 0
+    Enumeration: None
+  PiB Unknown 9:
+    DataType: float
+    Default: 0
+    Enumeration: None
+  PiB Unknown 10:
+    DataType: float
+    Default: 0
+    Enumeration: None
+  PiB Unknown 11:
+    DataType: float
+    Default: 0
+    Enumeration: None
+  PiB Unknown 12:
+    DataType: float
+    Default: 0
+    Enumeration: None
+  PiB Unknown 13:
+    DataType: float
+    Default: 0
+    Enumeration: None
+  PiB Emitter Name (Must Match ID):
+    DataType: string(32)
+    Default: 0
+    Enumeration: None

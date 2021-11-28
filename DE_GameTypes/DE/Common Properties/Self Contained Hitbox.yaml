@@ -1,0 +1,10 @@
+Structure Type: Custom
+Property:
+  Damage:
+    DataType: uint32
+    Default: 100
+    Enumeration: None
+  Unknown:
+    DataType: End Structure
+    Default: 0
+    Enumeration: None
