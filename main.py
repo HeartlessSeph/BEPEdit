@@ -36,6 +36,7 @@ tkinter.Tk().withdraw()  # prevents an empty tkinter window from appearing
 
 # Arguments
 parser = argparse.ArgumentParser(description=".BEP extraction tool")
+parser.add_argument("--skipoption", help="Skips startup options", action="store_true")
 parser_group = parser.add_mutually_exclusive_group()
 ver_text = parser_group.add_argument("--verchange", help="Converts bep from one game to another. Required input file is *.bep or folder containing .bep files.", action="store_true")
 conv_text = parser_group.add_argument("--OEbinconv", help="Converts list of OE Properties to bep files. Required input file is property.bin", action="store_true")

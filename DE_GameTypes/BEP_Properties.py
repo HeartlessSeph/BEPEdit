@@ -297,6 +297,7 @@ def convert_bep_to_json(bepfile, bep_dict, bep_name, base_game, base_engine, bas
 
                 if prop_json_orig["Structure Type"] == "Generic":
                     z = 0
+                    print((property_size / 4) - 8)
                     while z < (property_size / 4) - 8:
                         bep_dict[bep_name]["Property " + str(y) + " (" + property_type_text + ")"]["Property Unk " + str(z)] = bepfile.read_uint32()
                         z = z + 1
@@ -343,8 +344,6 @@ def convert_bep_to_json(bepfile, bep_dict, bep_name, base_game, base_engine, bas
                         elif "string" in data_type:
                             end_char = len(data_type) - 1
                             num_chars = int(data_type[7: end_char])
-                            print(num_chars)
-                            print(bepfile.pos())
                             prop_json_orig["Property"][sub_property]["Value"] = bepfile.read_str(num_chars)
                             property_size_temp += num_chars
                         elif data_type == "nibble_1":
@@ -376,6 +375,10 @@ def convert_bep_to_json(bepfile, bep_dict, bep_name, base_game, base_engine, bas
                                 bep_dict[bep_name]["Property " + str(y) + " (" + property_type_text + ")"][sub_property] = prop_json_orig["Property"][sub_property]["Value"]
                         elif data_type != "End Structure":
                             bep_dict[bep_name]["Property " + str(y) + " (" + property_type_text + ")"][sub_property] = prop_json_orig["Property"][sub_property]["Value"]
+                    if property_size_temp != property_size:
+                        print("Property template size not equal to bep property size! May cause issues.")
+                        print("Property Template Size: " + str(property_size_temp))
+                        print("BEP Property Size: " + str(property_size))
             else:
                 bep_dict[bep_name]["Property " + str(y)]["Property GUID"] = property_guid
                 bep_dict[bep_name]["Property " + str(y)]["Bone Checksum"] = bone_checksum
@@ -590,7 +593,7 @@ def convert_json_to_bep(bep_json, base_game_dict, base_game, base_engine, bep_pa
                                     property_size += 4
 
                 else:
-                    temp_dict = remove_keys_from_dict(bep_json[bep_name][bep_property], 15)
+                    temp_dict = remove_keys_from_dict(bep_json[bep_name][bep_property], 14)
                     for sub_property in list(temp_dict.keys()):
                         writer.write_uint32(temp_dict[sub_property])
                         property_size += 4

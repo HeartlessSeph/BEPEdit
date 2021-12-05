@@ -1,15 +1,15 @@
 Structure Type: Custom
 Property:
-  PiB Emitter ID:
-    DataType: uint32
-    Default: 1
-    Enumeration: PiBs_K2
-  PiB Unknown 1:
+  PiB Unknown a:
     DataType: uint32
     Default: 0
     Enumeration: None
-  Null 1:
-    DataType: float
+  PiB Emitter ID:
+    DataType: uint32
+    Default: 1
+    Enumeration: None
+  PiB Unknown 1:
+    DataType: uint32
     Default: 0
     Enumeration: None
   Null 2:
@@ -29,10 +29,6 @@ Property:
     Default: 0
     Enumeration: None
   Null 4:
-    DataType: float
-    Default: 0
-    Enumeration: None
-  Null 5:
     DataType: float
     Default: 0
     Enumeration: None
@@ -128,12 +124,28 @@ Property:
     DataType: float
     Default: 0
     Enumeration: None
-  Null 15 (All FF):
-    DataType: bytes(32)
+  PiB Unknown g:
+    DataType: float
+    Default: 0
+    Enumeration: None
+  PiB Unknown h:
+    DataType: float
+    Default: 0
+    Enumeration: None
+  PiB Unknown i:
+    DataType: float
+    Default: 0
+    Enumeration: None
+  Null 5:
+    DataType: float
     Default: 0
     Enumeration: None
   Null 16:
     DataType: float
+    Default: 0
+    Enumeration: None
+  Null 15 (All FF):
+    DataType: bytes(32)
     Default: 0
     Enumeration: None
   Null 17:
@@ -164,7 +176,7 @@ Property:
     DataType: float
     Default: 0
     Enumeration: None
-  Finish Structure:
-    DataType: End Structure
+  PiB Emitter Name (Must Match ID):
+    DataType: string(52)
     Default: 0
     Enumeration: None

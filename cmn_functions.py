@@ -169,3 +169,7 @@ def bitfield(num):
             bitfieldlist.append(0)
             x = x + 1
     return bitfieldlist
+
+
+def debugging_print(text):
+    print(text)

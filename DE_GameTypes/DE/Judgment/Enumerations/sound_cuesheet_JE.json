@@ -1,5 +1,5 @@
-﻿{
-  "0": "",
+{
+  "0": "None",
   "1": "act_common",
   "2": "act_kiryu",
   "3": "adv_caba_drinking_party",
@@ -12,7 +12,7 @@
   "10": "bbg_d",
   "11": "caba_bgm",
   "12": "caba_operation",
-  "13": "Generic",
+  "13": "console",
   "14": "down_l_default",
   "15": "down_m_default",
   "16": "down_s_default",
