@@ -1,26 +1,317 @@
+0: kind_dmy
+1: camera_param
+2: camera_prio_set_low
+3: play_speed
+4: draw_off
+5: disable_frame
+6: telop
+7: notice
+8: post_effect_dof
+9: post_effect_diaphragm_rot
+10: post_effect_gradation
+11: talk_path
+12: plight_anim_color
+13: plight_anim_luminance
+14: clip_control
+15: post_effect_film_noise
+16: point_light
+17: shadow_range
+18: shadow_register
+19: PiB Emitter
+20: particle_fade
+21: particle_opacity
+22: particle_ground
+23: color_correction
+24: scenario_timeline
+25: Hyperarmor
 26: Audio
+27: vollight
+28: vollight_spot
+29: Flowdust Emitter
+30: Motion Blur
+31: Limflash
+32: spot_light
+33: body_damage_add
+34: post_effect_light_shaft
+35: splash_liquid
+36: directional_light
+37: post_effect_rgb_blur
+38: post_effect_feedback
+39: ambient
+40: ik_node
+41: ik_target
+42: ik_gpos
+43: ik_posture
+44: path_offset
+46: ik_lock_nodes
+47: tube_light
+48: ik_look_at
+49: post_effect_motion_blur_ratio
+50: eyes_high_light
+51: ui_fade
+52: ui_layer
+53: ui_texture
+54: movie_tex
+55: Music Change
+56: path_animation
+57: post_effect_tonemap
+58: stage_lod_force_high
+59: ssao
+60: Face Wrinkles
+61: Subtitles
+62: Fog
+63: fixed_hair
+64: camera_fnumber
+65: camera_setting
+66: post_effect_crossfade
+67: character_lod
+68: Rumble
+69: Physics Control
+70: post_effect_glare
+71: color_correction_hdr
+72: Lightbar Control
+73: track_human
 74: Follow Up Window
 75: Control Window
 76: sy1 Control Window
 77: Hitbox
+78: stage_draw_off
+79: point_light_animation
 80: Slide Toward Target
-88: Camera
-25: Hyperarmor TYPE1
-68: Rumble
+81: hit_wound
+82: AI\Moveset Change
+83: Equip Weapon
 84: Unequip Weapon
 85: Unequip Weapon and Wep Falls
-93: Button Prompt
-95: Game Speed
-97: Self Contained Hitbox
-104: Zoom
-128: Hyperarmor TYPE2
-152: Projectile
-157: Heat Control
-206: Charge
-19: PiB Emitter
-29: Flowdust Emitter
-31: Limflash
 86: Weapon Trail
-264: Heat Flowdust Emitter
-110: p0x6E_110
-87: p0x57_87
+87: Face Expression
+88: Camera Shake
+89: battle_sync
+90: continue_point
+91: camera_finish_battle
+92: mouse_bright
+93: Button Prompt
+94: battle_puid_simple
+95: Game Speed Control
+96: shop
+97: Self Contained Hitbox
+98: battle_timinginfostun
+99: auth_stream
+100: div_play
+101: connect_chara_in
+102: connect_camera
+103: ik_phone
+104: Zoom
+105: post_effect_motion_blur_ratio_parts
+106: fill_light_enable
+107: connect_chara_out
+108: fixed_exposure
+109: node_rotation
+110: ik_look_weight
+111: volume_preset
+112: msg_window
+113: asset_push
+114: asset_break_range
+115: footstep_se
+116: Equip Weapon
+117: Weapon Pick up and throw
+118: sound_automation_curve
+119: vfx_blast
+120: human_freeze
+121: auth_light_ratio
+122: reflection_scale
+123: item_get
+124: parts_blend
+125: motion_hand_mode
+126: sp_hit_effect
+127: stage_load_point
+128: Hyperarmor TYPE2
+129: ik_btl_sync
+130: dialog_option
+131: parts_blend_talk
+132: asset_dispose_init
+133: ui_button
+134: camera_shake_loop
+135: blink
+136: asset_hide
+137: blink_manual
+138: Texture Change
+139: Model Change
+140: dynamic_range_compress
+141: human_caption
+142: stage_light_off
+143: shadow_range_setting
+144: character_light_influence
+145: effect_asset_break
+146: speech
+147: front_hair_swing
+148: shoes_off
+149: equip_asset_hide
+150: expression
+151: posture
+152: Projectile
+153: down_se
+154: asset_movie_tex
+155: Movie Play
+156: mg_snack_common
+157: Heat Control
+158: asset_arms_reduce_use_count
+159: equip_asset_release
+161: human_caption_common_data
+162: Character Scale?
+163: battle_timinginfostring
+164: mg_snack_telop
+165: sea_param
+166: scene_transition
+167: contrast_correction
+168: sea_time
+169: div_play_async
+170: glass_water
+171: vignetting
+172: battle_bomb
+173: skin_sss
+174: glass_water_value
+175: chromatic_abberation
+176: hand_shadow
+177: sea_cap
+178: ik_equip
+179: expression_target
+180: asset_physics_in_auth
+181: Music End
+182: Substory Title
+183: mg_caba_tension
+184: player_point
+185: glass_water_shaker
+186: ui_taxi
+187: Hact Button Input
+188: Hact Button Mash Input
+189: mg_caba_unlock_profile
+190: general_timing
+191: battle_command_special
+192: scenario_timeline_auth
+193: stage_warp
+194: taxi_jump
+195: scene_switch
+196: karaoke_denmoku
+197: footstep_dont_play
+198: mg_clan_creator_member
+199: trophy
+200: sea_ripple
+201: safebox_item_get
+203: mg_cat_cafe_feeding
+204: dispose_light_adjustment
+206: Charge
+207: mg_temple_play_paper_fortune
+208: battle_invisible_fighter
+209: mg_offerings_ui
+210: asset_resurrection
+211: item_giving_wnd
+212: Spawn Weapon
+213: Spawn Weapon and Equip Weapon
+214: camera_gaze
+215: mg_offerings_proc
+216: asset_dispose_init_talk_startup
+217: asset_destory_off
+218: flow_bubble_gen
+219: player_turn
+220: scenario_timeline_link_time_bar
+221: camera_free
+222: battle_tutorial
+223: marine_snow
+224: shadow_auth_behavior
+225: skip_point
+226: scene_connect
+227: player_point_disp
+228: reward
+229: ui_mg_info
+230: special_favor
+231: mg_clan_creator_password
+232: system_msg_wnd
+233: camera_free_dist
+234: camera_free_freeze
+235: mg_caba_love_point
+236: item_inc_and_dec
+237: password_check
+238: npc_control
+239: mg_offerings_msg_wnd
+240: skip_enable
+241: lens_distortion
+242: player_warp
+243: effect_confetti_remove
+244: costume_change
+245: easy_shadow_setting
+246: safebox_check_open
+247: motion_turn_face
+248: sound_amb
+249: volume_preset_add
+250: sound_arm_label
+251: talk_text
+252: shadow_invisible
+253: move_before_talk
+254: fill_light_disable
+255: easy_dof_focus
+256: talk_text_select_options
+257: asset_dispose_init_uid
+258: video_call
+259: video_call_incoming
+260: texture_blend
+261: talk_value
+262: color_correction_mask
+263: unlocking
+264: Charge Attack Flowdust
+265: talk_flag
+266: disable_local_reflection
+267: qsearch
+268: asset_break_uid
+269: asset_node_culling
+270: friend_gauge
+271: cabaret_island_tieup_shop
+272: cabaret_island_scout
+273: boot_drone
+274: asset_door_open
+275: ct_dynamics
+276: cabaret_island_talk_event
+277: bounding_box_adjustment
+278: Rain Effect
+279: Snow Effect
+280: projection_pool
+281: collar_adjustment
+282: room_dust
+283: ground_character
+284: body_rain_splash
+285: parts_blend_talk
+286: post_effect_character_halo
+287: video_in_private_room
+288: ui_cmn_wnd
+289: ui_input_number
+290: shogi_taikyoku_select
+291: asset_uid_physics
+292: item_box
+293: get_skill_window
+294: analog_noise
+295: talk_text_select_list
+296: player_gauge
+297: side_case_request
+298: character_speed
+299: evidence_choice
+300: category_title
+301: game_control_off
+302: cooking
+303: verification_2d
+304: verification_2d
+305: mirror_rect
+306: item_giving_use
+307: item_get_sugoroku
+308: equip_slot
+309: najimi_telop
+310: player_gauge_show
+311: msg_app
+312: majima_achievement
+313: ui_insert_photo
+314: parts_blend_talk_text
+315: hide_character
+316: asset_connect_out
+317: disable_fuon_kinpaku
+318: footstep_dont_play_chara
+319: uid_after_replace
+320: connect_camera_special
