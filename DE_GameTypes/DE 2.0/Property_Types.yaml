@@ -77,7 +77,7 @@
 76: point_light_animation
 77: Slide Toward Target
 78: hit_wound
-79: AI\Moveset Change
+79: AI or Moveset Change
 80: Equip Weapon
 81: Unequip Weapon
 82: Unequip Weapon and Wep Falls
@@ -94,7 +94,7 @@
 93: shop
 94: Self Contained Hitbox
 95: battle_transit_stun
-96: authstream
+96: auth_stream
 97: div_play
 98: connect_chara_in
 99: connect_camera
@@ -257,7 +257,7 @@
 256: talk_value
 257: color_correction_mask
 258: unlocking
-259: Charge Flowdust Emitter
+259: Charge Attack Flowdust
 260: talk_flag
 261: disable_local_reflection
 262: qsearch
@@ -291,7 +291,7 @@
 290: player_gauge
 291: side_case_request
 292: character_speed
-293: evidence_choide
+293: evidence_choice
 294: category_title
 295: game_control_off
 296: cooking
