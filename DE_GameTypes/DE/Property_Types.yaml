@@ -2,7 +2,7 @@
 1: camera_param
 2: camera_prio_set_low
 3: play_speed
-4: draw_off
+4: play_draw_off
 5: disable_frame
 6: telop
 7: notice
@@ -35,7 +35,7 @@
 34: post_effect_light_shaft
 35: splash_liquid
 36: directional_light
-37: post_effect_rgb_blur
+37: post_effect_chromatic_aberration_cima
 38: post_effect_feedback
 39: ambient
 40: ik_node
@@ -61,7 +61,7 @@
 61: Subtitles
 62: Fog
 63: fixed_hair
-64: camera_fnumber
+64: camera_f_number
 65: camera_setting
 66: post_effect_crossfade
 67: character_lod
@@ -91,11 +91,11 @@
 91: camera_finish_battle
 92: mouse_bright
 93: Button Prompt
-94: battle_puid_simple
+94: battle_reaction_type
 95: Game Speed Control
 96: shop
 97: Self Contained Hitbox
-98: battle_timinginfostun
+98: battle_transit_stun
 99: auth_stream
 100: div_play
 101: connect_chara_in
@@ -107,7 +107,7 @@
 107: connect_chara_out
 108: fixed_exposure
 109: node_rotation
-110: ik_look_weight
+110: ik_look_at_weight
 111: volume_preset
 112: msg_window
 113: asset_push
@@ -158,8 +158,8 @@
 158: asset_arms_reduce_use_count
 159: equip_asset_release
 161: human_caption_common_data
-162: Character Scale?
-163: battle_timinginfostring
+162: character_node_scale
+163: battle_command
 164: mg_snack_telop
 165: sea_param
 166: scene_transition
